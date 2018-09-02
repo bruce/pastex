@@ -1,11 +1,2 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Pastex.Repo.insert!(%Pastex.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+# Note: These need to be idempotent so we can run them automatically
+# when running docker-compose.
