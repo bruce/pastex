@@ -2,11 +2,10 @@ defmodule Pastex.Content.File do
   use Ecto.Schema
   import Ecto.Changeset
 
-
   schema "files" do
     field :body, :string
     field :name, :string
-    field :paste_id, :id
+    belongs_to :paste, Pastex.Content.Paste
 
     timestamps()
   end
