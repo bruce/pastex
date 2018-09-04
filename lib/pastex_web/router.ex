@@ -5,7 +5,12 @@ defmodule PastexWeb.Router do
     plug(:accepts, ["json"])
   end
 
-  scope "/api", PastexWeb do
+  scope "/" do
     pipe_through(:api)
+
+    forward("/graphiql", Absinthe.Plug.GraphiQL,
+      schema: PastexWeb.Schema,
+      interface: :playground
+    )
   end
 end

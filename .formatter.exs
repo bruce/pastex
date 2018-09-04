@@ -1,4 +1,4 @@
 [
   inputs: ["mix.exs", "{config,lib,test}/**/*.{ex,exs}"],
-  import_deps: [:ecto, :phoenix]
+  import_deps: [:ecto, :absinthe, :phoenix]
 ]
