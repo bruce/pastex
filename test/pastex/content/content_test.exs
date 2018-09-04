@@ -7,7 +7,11 @@ defmodule Pastex.ContentTest do
     alias Pastex.Content.Paste
 
     @valid_attrs %{description: "some description", name: "some name", privacy: "some privacy"}
-    @update_attrs %{description: "some updated description", name: "some updated name", privacy: "some updated privacy"}
+    @update_attrs %{
+      description: "some updated description",
+      name: "some updated name",
+      privacy: "some updated privacy"
+    }
     @invalid_attrs %{description: nil, name: nil, privacy: nil}
 
     def paste_fixture(attrs \\ %{}) do
