@@ -30,7 +30,7 @@ files = [
     name: "foo.ex",
     body: """
     defmodule Foo do
-      def foo, do: Bar.bar()
+      def foo, do: Bar.bar
     end
     """
   },
@@ -40,7 +40,7 @@ files = [
     name: "bar.ex",
     body: """
     defmodule Bar do
-      def bar, do: Foo.foo()
+      def bar, do: Foo.foo
     end
     """
   }

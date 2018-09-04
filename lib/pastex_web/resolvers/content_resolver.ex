@@ -13,4 +13,14 @@ defmodule PastexWeb.ContentResolver do
 
     {:ok, files}
   end
+
+  def format_body(file, args, _) do
+    case Map.get(args, :style) || :original do
+      :original ->
+        {:ok, file.body}
+
+      :formatted ->
+        {:ok, Code.format_string!(file.body)}
+    end
+  end
 end

@@ -31,6 +31,15 @@ defmodule PastexWeb.Schema.ContentTypes do
       end
     end
 
-    field :body, :string
+    field :body, :string do
+      arg :style, :body_style, default_value: :original
+
+      resolve &ContentResolver.format_body/3
+    end
+  end
+
+  enum :body_style do
+    value :original
+    value :formatted
   end
 end
