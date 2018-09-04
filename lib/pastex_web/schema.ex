@@ -12,4 +12,8 @@ defmodule PastexWeb.Schema do
 
     import_fields :content_queries
   end
+
+  mutation do
+    import_fields :content_mutations
+  end
 end

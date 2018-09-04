@@ -9,6 +9,15 @@ defmodule PastexWeb.Schema.ContentTypes do
     end
   end
 
+  object :content_mutations do
+    field :create_paste, :paste do
+      arg :input, non_null(:create_paste_input)
+      resolve &ContentResolver.create_paste/3
+    end
+  end
+
+  ## Objects
+
   object :paste do
     field :id, non_null(:id)
     field :name, non_null(:string)
@@ -41,5 +50,18 @@ defmodule PastexWeb.Schema.ContentTypes do
   enum :body_style do
     value :original
     value :formatted
+  end
+
+  ## Inputs
+
+  input_object :create_paste_input do
+    field :name, non_null(:string)
+    field :description, :string
+    field :files, non_null(list_of(non_null(:file_input)))
+  end
+
+  input_object :file_input do
+    field :name, :string
+    field :body, :string
   end
 end
