@@ -35,14 +35,12 @@ defmodule PastexWeb.Schema do
   @pastes [
     %{
       id: 1,
-      name: "Hello World",
-      files: [1]
+      name: "Hello World"
     },
     %{
       id: 2,
       name: "Help!",
-      description: "I don't know what I'm doing!",
-      files: [2, 3]
+      description: "I don't know what I'm doing!"
     }
   ]
 
