@@ -25,6 +25,8 @@ defmodule PastexWeb.Schema do
   end
 
   object :file do
+    field :paste, non_null(:paste)
+
     field :name, :string do
       resolve fn file, _, _ ->
         {:ok, Map.get(file, :name) || "Untitled"}
