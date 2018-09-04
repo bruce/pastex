@@ -1,32 +1,27 @@
-# Note: These need to be idempotent so we can run them automatically
-# when running docker-compose.
-
 alias Pastex.{Repo, Content}
 
 pastes = [
   %Content.Paste{
-    id: 1,
     name: "Hello World"
   },
   %Content.Paste{
-    id: 2,
     name: "Help!",
     description: "I don't know what I'm doing!"
   }
 ]
 
-for paste <- pastes do
-  Repo.insert!(paste, on_conflict: :nothing)
-end
+[past1, past2] =
+  for paste <- pastes do
+    Repo.insert!(paste)
+  end
 
 files = [
   %Content.File{
-    id: 1,
+    paste_id: past1.id,
     body: ~s[IO.puts("Hello World")]
   },
   %Content.File{
-    id: 2,
-    paste_id: 2,
+    paste_id: past2.id,
     name: "foo.ex",
     body: """
     defmodule Foo do
@@ -35,8 +30,7 @@ files = [
     """
   },
   %Content.File{
-    id: 3,
-    paste_id: 2,
+    paste_id: past2.id,
     name: "bar.ex",
     body: """
     defmodule Bar do
@@ -47,5 +41,5 @@ files = [
 ]
 
 for file <- files do
-  Repo.insert!(file, on_conflict: :nothing)
+  Repo.insert!(file)
 end
