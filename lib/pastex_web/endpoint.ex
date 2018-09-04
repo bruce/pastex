@@ -1,5 +1,6 @@
 defmodule PastexWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :pastex
+  use Absinthe.Phoenix.Endpoint
 
   socket("/socket", PastexWeb.UserSocket)
 
