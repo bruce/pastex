@@ -1,7 +1,7 @@
 defmodule PastexWeb.Schema do
   use Absinthe.Schema
 
-  alias PastexWeb.ContentResolver
+  import_types __MODULE__.ContentTypes
 
   query do
     field :health, :string do
@@ -10,33 +10,6 @@ defmodule PastexWeb.Schema do
       end)
     end
 
-    field :pastes, list_of(:paste) do
-      resolve &ContentResolver.pastes/3
-    end
-  end
-
-  object :paste do
-    field :id, non_null(:id)
-    field :name, non_null(:string)
-    field :description, :string
-
-    field :files, non_null(list_of(:file)) do
-      resolve &ContentResolver.get_files/3
-    end
-
-    field :file_count, non_null(:integer)
-  end
-
-  object :file do
-    field :id, non_null(:id)
-    field :paste, non_null(:paste)
-
-    field :name, :string do
-      resolve fn file, _, _ ->
-        {:ok, Map.get(file, :name) || "Untitled"}
-      end
-    end
-
-    field :body, :string
+    import_fields :content_queries
   end
 end
