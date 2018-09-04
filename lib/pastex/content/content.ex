@@ -17,8 +17,20 @@ defmodule Pastex.Content do
       [%Paste{}, ...]
 
   """
-  def list_pastes do
-    Repo.all(Paste)
+  def list_pastes(current_user) do
+    current_user
+    |> authorized_pastes
+    |> Repo.all()
+  end
+
+  def authorized_pastes(nil) do
+    Paste
+    |> where(privacy: "public")
+  end
+
+  def authorized_pastes(current_user) do
+    from p in Paste,
+      where: p.privacy == "public" or p.user_id == ^current_user.id
   end
 
   @doc """
@@ -35,7 +47,11 @@ defmodule Pastex.Content do
       ** (Ecto.NoResultsError)
 
   """
-  def get_paste!(id), do: Repo.get!(Paste, id)
+  def get_paste(current_user, id) do
+    current_user
+    |> authorized_pastes
+    |> Repo.get(id)
+  end
 
   @doc """
   Creates a paste.

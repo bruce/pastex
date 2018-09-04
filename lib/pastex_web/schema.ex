@@ -8,4 +8,8 @@ defmodule PastexWeb.Schema do
   query do
     import_fields :content_queries
   end
+
+  union :search_result do
+    types [:paste, :user]
+  end
 end

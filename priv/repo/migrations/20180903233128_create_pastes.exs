@@ -3,14 +3,14 @@ defmodule Pastex.Repo.Migrations.CreatePastes do
 
   def change do
     create table(:pastes) do
-      add :name, :string
-      add :description, :text
-      add :privacy, :string
-      add :author_id, references(:users, on_delete: :nothing)
+      add(:name, :string)
+      add(:description, :text)
+      add(:privacy, :string, null: false, default_value: "public")
+      add(:author_id, references(:users, on_delete: :nothing))
 
       timestamps()
     end
 
-    create index(:pastes, [:author_id])
+    create(index(:pastes, [:author_id]))
   end
 end

@@ -2,24 +2,28 @@ defmodule PastexWeb.Schema.ContentTypes do
   use Absinthe.Schema.Notation
   use Absinthe.Relay.Schema.Notation, :modern
 
+  alias PastexWeb.{ContentResolver}
+
   # Object Types
 
   object :content_queries do
-    # paste(id: ID!): Paste
     field :paste, :paste do
       arg :id, non_null(:id)
+      resolve &ContentResolver.paste/3
     end
 
-    field :pastes, list_of(:paste)
+    connection field(:pastes, node_type: :search_result) do
+      resolve &ContentResolver.pastes/3
+    end
 
     connection field(:search, node_type: :search_result) do
-      arg :first, non_null(:integer)
-      arg :after, :string
       arg :filter, :search_filter
+      resolve &ContentResolver.search/3
     end
   end
 
   connection(node_type: :search_result)
+  connection(node_type: :paste)
 
   object :paste do
     field :id, non_null(:id)
@@ -79,15 +83,9 @@ defmodule PastexWeb.Schema.ContentTypes do
     field :body, :string
   end
 
-  # Unions
-
-  union :search_result do
-    types [:paste, :user]
-  end
-
   enum :privacy do
-    value :public
-    value :private
+    value :public, as: "public"
+    value :private, as: "private"
   end
 
   scalar :email do
