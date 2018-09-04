@@ -28,8 +28,9 @@ defmodule PastexWeb do
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/pastex_web/templates",
-                        namespace: PastexWeb
+      use Phoenix.View,
+        root: "lib/pastex_web/templates",
+        namespace: PastexWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]

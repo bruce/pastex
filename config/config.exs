@@ -14,8 +14,7 @@ config :pastex, PastexWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "mrfI7vOxk/zHbD6Fsp1n7Gu/F5MaQRw0okdTr2dgt5zMRaLodZa+dGNHPdXbYjST",
   render_errors: [view: PastexWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: Pastex.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Pastex.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -24,4 +23,4 @@ config :logger, :console,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"
