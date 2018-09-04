@@ -20,6 +20,7 @@ defmodule PastexWeb.Schema do
   end
 
   object :file do
+    field :paste, non_null(:paste)
     field :name, :string
     field :body, :string
   end
