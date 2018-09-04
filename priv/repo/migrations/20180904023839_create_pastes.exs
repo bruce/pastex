@@ -5,7 +5,6 @@ defmodule Pastex.Repo.Migrations.CreatePastes do
     create table(:pastes) do
       add(:name, :string)
       add(:description, :text)
-      add(:privacy, :string, null: false, default: "public")
       add(:author_id, references(:users, on_delete: :nothing))
 
       timestamps()

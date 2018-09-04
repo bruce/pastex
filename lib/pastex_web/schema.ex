@@ -16,15 +16,19 @@ defmodule PastexWeb.Schema do
   end
 
   object :paste do
+    field :id, non_null(:id)
     field :name, non_null(:string)
     field :description, :string
 
     field :files, non_null(list_of(:file)) do
       resolve &ContentResolver.get_files/3
     end
+
+    field :file_count, non_null(:integer)
   end
 
   object :file do
+    field :id, non_null(:id)
     field :paste, non_null(:paste)
 
     field :name, :string do
