@@ -52,11 +52,11 @@ defmodule PastexWeb.Schema do
 
   @files [
     %{
-      id: 1,
+      paste_id: 1,
       body: ~s[IO.puts("Hello World")]
     },
     %{
-      id: 2,
+      paste_id: 2,
       name: "foo.ex",
       body: """
       defmodule Foo do
@@ -65,7 +65,7 @@ defmodule PastexWeb.Schema do
       """
     },
     %{
-      id: 3,
+      paste_id: 2,
       name: "bar.ex",
       body: """
       defmodule Bar do
@@ -77,9 +77,9 @@ defmodule PastexWeb.Schema do
 
   def get_files(paste, _, _) do
     files =
-      for id <- paste.files do
-        Enum.find(@files, fn file -> file.id == id end)
-      end
+      Enum.filter(@files, fn file ->
+        file.paste_id == paste.id
+      end)
 
     {:ok, files}
   end
