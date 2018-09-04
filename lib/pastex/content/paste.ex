@@ -5,7 +5,6 @@ defmodule Pastex.Content.Paste do
   schema "pastes" do
     field :description, :string
     field :name, :string
-    field :privacy, :string
     field :author_id, :id
 
     has_many :files, Pastex.Content.File
@@ -16,7 +15,7 @@ defmodule Pastex.Content.Paste do
   @doc false
   def changeset(paste, attrs) do
     paste
-    |> cast(attrs, [:name, :description, :privacy])
-    |> validate_required([:name, :description, :privacy])
+    |> cast(attrs, [:name, :description])
+    |> validate_required([:name, :description])
   end
 end
