@@ -8,6 +8,16 @@ defmodule PastexWeb.Schema.ContentTypes do
     field :name, non_null(:string)
     field :description, :string
 
+    field :author, :user do
+      resolve fn
+        %{author_id: nil}, _, _ ->
+          {:ok, nil}
+
+        %{author_id: id}, _, _ ->
+          {:ok, Pastex.Identity.get_user(id)}
+      end
+    end
+
     field :files, non_null(list_of(:file)) do
       resolve &ContentResolver.get_files/3
     end

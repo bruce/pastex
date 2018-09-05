@@ -42,6 +42,15 @@ defmodule PastexWeb.Schema.IdentityTypes do
 
   object :user do
     field :name, :string
-    field :email, :string
+
+    field :email, :string do
+      resolve fn
+        %{id: id} = user, _, %{context: %{current_user: %{id: id}}} ->
+          {:ok, user.email}
+
+        _, _, _ ->
+          {:error, "unauthorized"}
+      end
+    end
   end
 end
