@@ -5,7 +5,7 @@ defmodule PastexWeb.ContentResolver do
 
   def list_pastes(_, args, %{context: context}) do
     limit = min(max(args[:limit] || 25, 0), 25)
-    offset = max(args[:limit] || 0, 0)
+    offset = max(args[:offset] || 0, 0)
 
     pastes = Content.list_pastes(context[:current_user], limit: limit, offset: offset)
     {:ok, pastes}
