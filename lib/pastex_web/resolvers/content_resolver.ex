@@ -11,13 +11,14 @@ defmodule PastexWeb.ContentResolver do
     |> Relay.Connection.from_query(&Pastex.Repo.all/1, args)
   end
 
-  def get_files(paste, _, _) do
-    files =
-      paste
-      |> Ecto.assoc(:files)
-      |> Pastex.Repo.all()
+  import Absinthe.Resolution.Helpers, only: [on_load: 2]
 
-    {:ok, files}
+  def get_files(paste, _, %{context: %{loader: loader}}) do
+    loader
+    |> Dataloader.load(:content, :files, paste)
+    |> on_load(fn loader ->
+      {:ok, Dataloader.get(loader, :content, :files, paste)}
+    end)
   end
 
   ## Mutations
