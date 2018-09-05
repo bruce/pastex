@@ -3,8 +3,8 @@ defmodule PastexWeb.ContentResolver do
 
   ## Queries
 
-  def list_pastes(_, _, _) do
-    {:ok, Content.list_pastes()}
+  def list_pastes(_, _, %{context: context}) do
+    {:ok, Content.list_pastes(context[:current_user])}
   end
 
   def get_files(paste, _, _) do
