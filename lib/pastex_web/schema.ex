@@ -18,14 +18,14 @@ defmodule PastexWeb.Schema do
   end
 
   subscription do
-    field :paste_change, :paste do
+    field :paste_created, :paste do
       config fn _, _ ->
-        {:ok, topic: "all"}
+        {:ok, topic: "*"}
       end
 
-      trigger [:create_paste],
-        topic: fn paste ->
-          [paste.id, "all"]
+      trigger :create_paste,
+        topic: fn _paste ->
+          "*"
         end
     end
   end
