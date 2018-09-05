@@ -1,4 +1,4 @@
-defmodule PlatexWeb.Auth do
+defmodule PastexWeb.Auth do
   @user_salt "user salt"
 
   def sign(data) do
