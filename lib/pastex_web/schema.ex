@@ -52,6 +52,10 @@ defmodule PastexWeb.Schema do
   alias PastexWeb.Middleware
 
   def middleware(middleware, _, _) do
-    [Middleware.AuthGet | middleware]
+    tracing_middleware() ++ [Middleware.AuthGet | middleware]
+  end
+
+  defp tracing_middleware() do
+    [ApolloTracing.Middleware.Tracing]
   end
 end
