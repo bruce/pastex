@@ -3,8 +3,8 @@ defmodule PastexWeb.ContentResolver do
 
   ## Queries
 
-  def list_pastes(_, _, _) do
-    {:ok, Content.list_pastes()}
+  def list_pastes(_, _, %{context: context}) do
+    {:ok, Content.list_pastes(context[:current_user])}
   end
 
   def get_files(paste, _, _) do
@@ -18,7 +18,16 @@ defmodule PastexWeb.ContentResolver do
 
   ## Mutations
 
-  def create_paste(_, %{input: input}, _) do
+  def create_paste(_, %{input: input}, %{context: context}) do
+    input =
+      case context do
+        %{current_user: %{id: id}} ->
+          Map.put(input, :author_id, id)
+
+        _ ->
+          input
+      end
+
     case Content.create_paste(input) do
       {:ok, paste} ->
         {:ok, paste}
