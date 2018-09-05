@@ -33,6 +33,8 @@ defmodule Pastex.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:comeonin_ecto_password, "~> 2.1"},
+      {:pbkdf2_elixir, "~> 0.12.0"},
       {:phoenix, "~> 1.3.4"},
       {:absinthe, "~> 1.4"},
       {:absinthe_plug, "~> 1.4"},

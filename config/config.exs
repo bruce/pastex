@@ -5,6 +5,11 @@
 # is restricted to this project.
 use Mix.Config
 
+config :comeonin, Ecto.Password, Comeonin.Pbkdf2
+
+config :comeonin, :pbkdf2_rounds, 120_000
+config :comeonin, :pbkdf2_salt_len, 512
+
 # General application configuration
 config :pastex,
   ecto_repos: [Pastex.Repo]

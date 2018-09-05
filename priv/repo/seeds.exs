@@ -1,4 +1,19 @@
-alias Pastex.{Repo, Content}
+alias Pastex.{Repo, Content, Identity}
+
+users = [
+  %Identity.User{
+    name: "Ben Wilson",
+    email: "ben@localhost.com",
+    password: "abc123"
+  },
+  %Identity.User{
+    name: "Rich Kilmer",
+    email: "rich@localhost.com",
+    password: "abc123"
+  }
+]
+
+[user1, user2] = Enum.map(users, &Repo.insert!/1)
 
 pastes = [
   %Content.Paste{
