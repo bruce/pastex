@@ -13,7 +13,9 @@ defmodule PastexWeb.Router do
       schema: PastexWeb.Schema,
       interface: :playground,
       socket: PastexWeb.UserSocket,
-      pipeline: {ApolloTracing.Pipeline, :plug}
+      pipeline: {ApolloTracing.Pipeline, :plug},
+      analyze_complexity: true,
+      max_complexity: 10_000
     )
   end
 end

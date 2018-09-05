@@ -10,6 +10,8 @@ defmodule PastexWeb.Schema.ContentTypes do
     field :description, :string
 
     field :author, :user do
+      complexity 100
+
       resolve fn
         %{author_id: nil}, _, _ ->
           {:ok, nil}
@@ -44,6 +46,10 @@ defmodule PastexWeb.Schema.ContentTypes do
 
   object :content_queries do
     connection field :pastes, node_type: :paste do
+      complexity fn args, child_complexity ->
+        trunc((1 + args[:first] * 0.1) * child_complexity)
+      end
+
       resolve &ContentResolver.list_pastes/3
     end
   end
