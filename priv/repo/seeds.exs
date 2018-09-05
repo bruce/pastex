@@ -35,8 +35,8 @@ pastes = [
   }
 ]
 
-[past1, past2, past3] =
-  for paste <- pastes do
+[past1, past2, past3 | _] =
+  for paste <- pastes |> Stream.cycle() |> Enum.take(100) do
     Repo.insert!(paste)
   end
 
