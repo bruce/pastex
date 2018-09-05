@@ -1,5 +1,6 @@
 defmodule PastexWeb.Schema do
   use Absinthe.Schema
+  use Absinthe.Relay.Schema, :modern
 
   import_types PastexWeb.Schema.{ContentTypes, IdentityTypes}
 

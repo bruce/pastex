@@ -1,5 +1,6 @@
 defmodule PastexWeb.Schema.ContentTypes do
   use Absinthe.Schema.Notation
+  use Absinthe.Relay.Schema.Notation, :modern
 
   alias PastexWeb.ContentResolver
 
@@ -39,10 +40,10 @@ defmodule PastexWeb.Schema.ContentTypes do
     end
   end
 
+  connection(node_type: :paste)
+
   object :content_queries do
-    field :pastes, list_of(:paste) do
-      arg :limit, :integer
-      arg :offset, :integer
+    connection field :pastes, node_type: :paste do
       resolve &ContentResolver.list_pastes/3
     end
   end

@@ -17,22 +17,16 @@ defmodule Pastex.Content do
       [%Paste{}, ...]
 
   """
-  def list_pastes(current_user, opts \\ []) do
+  def query_pastes(current_user) do
     Paste
     |> order_by(desc: :inserted_at)
     |> scope_to_user(current_user)
-    |> paginate(opts)
-    |> Repo.all()
   end
 
-  defp paginate(query, opts) do
-    Enum.reduce(opts, query, fn
-      {:limit, limit}, query ->
-        query |> limit(^limit)
-
-      {:offset, offset}, query ->
-        query |> offset(^offset)
-    end)
+  def list_pastes(current_user) do
+    current_user
+    |> query_pastes
+    |> Repo.all()
   end
 
   defp scope_to_user(query, %{id: user_id}) do
