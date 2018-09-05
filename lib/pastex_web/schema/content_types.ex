@@ -14,6 +14,7 @@ defmodule PastexWeb.Schema.ContentTypes do
   end
 
   object :file do
+    field :id, non_null(:id)
     field :paste, non_null(:paste)
 
     field :name, :string do
