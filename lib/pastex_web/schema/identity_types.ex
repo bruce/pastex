@@ -3,6 +3,14 @@ defmodule PastexWeb.Schema.IdentityTypes do
 
   alias Pastex.Identity
 
+  object :identity_queries do
+    field :me, :user do
+      resolve fn _, _, %{context: context} ->
+        {:ok, context[:current_user]}
+      end
+    end
+  end
+
   object :identity_mutations do
     field :create_session, :session do
       arg :email, non_null(:string)

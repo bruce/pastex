@@ -10,6 +10,7 @@ defmodule PastexWeb.Schema do
       end)
     end
 
+    import_fields :identity_queries
     import_fields :content_queries
   end
 
