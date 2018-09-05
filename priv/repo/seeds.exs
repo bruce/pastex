@@ -65,7 +65,7 @@ files = [
   },
   %Content.File{
     paste_id: past3.id,
-    name: "foo.ex,
+    name: "foo.ex",
     body: """
     IO.puts("this is secret")
     """
