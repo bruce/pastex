@@ -63,6 +63,15 @@ defmodule Pastex.Identity do
     Repo.get(User, id)
   end
 
+  def get_users(_, ids) do
+    Process.sleep(20)
+
+    User
+    |> where([u], u.id in ^Enum.uniq(ids))
+    |> Repo.all()
+    |> Map.new(fn user -> {user.id, user} end)
+  end
+
   @doc """
   Creates a user.
 

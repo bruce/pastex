@@ -24,8 +24,8 @@ defmodule PastexWeb.Schema.ContentTypes do
   def get_author(%{author_id: nil}, _, _), do: {:ok, nil}
 
   def get_author(paste, _, _) do
-    async(fn ->
-      {:ok, Pastex.Identity.get_user(paste.author_id)}
+    batch({Pastex.Identity, :get_users}, paste.author_id, fn users ->
+      {:ok, Map.get(users, paste.author_id)}
     end)
   end
 
