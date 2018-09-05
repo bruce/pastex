@@ -3,6 +3,7 @@ defmodule PastexWeb.Router do
 
   pipeline :api do
     plug(:accepts, ["json"])
+    plug(PastexWeb.Context)
   end
 
   scope "/" do
