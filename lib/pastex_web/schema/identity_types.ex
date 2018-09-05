@@ -5,7 +5,8 @@ defmodule PastexWeb.Schema.IdentityTypes do
 
   object :identity_queries do
     field :me, :user do
-      resolve fn _, _, %{context: context} ->
+      resolve fn _, _, %{context: context} = res ->
+        res |> IO.inspect()
         {:ok, context[:current_user]}
       end
     end
@@ -42,15 +43,6 @@ defmodule PastexWeb.Schema.IdentityTypes do
 
   object :user do
     field :name, :string
-
-    field :email, :string do
-      resolve fn
-        %{id: id} = user, _, %{context: %{current_user: %{id: id}}} ->
-          {:ok, user.email}
-
-        _, _, _ ->
-          {:error, "unauthorized"}
-      end
-    end
+    field :email, :string
   end
 end

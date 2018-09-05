@@ -31,4 +31,10 @@ defmodule PastexWeb.Schema do
         end
     end
   end
+
+  alias PastexWeb.Middleware
+
+  def middleware(middleware, _, _) do
+    [Middleware.AuthGet | middleware]
+  end
 end
