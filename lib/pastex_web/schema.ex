@@ -1,8 +1,6 @@
 defmodule PastexWeb.Schema do
   use Absinthe.Schema
 
-  alias PastexWeb.ContentResolver
-
   import_types PastexWeb.Schema.ContentTypes
 
   query do
@@ -25,10 +23,10 @@ defmodule PastexWeb.Schema do
         {:ok, topic: "all"}
       end
 
-      # trigger [:create_paste],
-      #   topic: fn paste ->
-      #     [paste.id, "all"]
-      #   end
+      trigger [:create_paste],
+        topic: fn paste ->
+          [paste.id, "all"]
+        end
     end
   end
 end
