@@ -15,7 +15,7 @@ defmodule Pastex.Content.Paste do
   @doc false
   def changeset(paste, attrs) do
     paste
-    |> cast(attrs, [:name, :description])
+    |> cast(attrs, [:name, :author_id, :description])
     |> cast_assoc(:files)
     |> validate_required([:name, :description])
   end
