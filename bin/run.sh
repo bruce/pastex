@@ -29,7 +29,7 @@ then
   echo "Database already setup updating seeds..."
   mix run priv/repo/seeds.exs
 else
-  mix ecto.setup
+  mix ecto.reset
 fi
 
 echo "\n Launching Phoenix web server..."
