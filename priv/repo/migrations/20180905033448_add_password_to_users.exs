@@ -3,7 +3,7 @@ defmodule Pastex.Repo.Migrations.AddPasswordToUsers do
 
   def change do
     alter table(:users) do
-      add(:password, :string, null: false)
+      add(:password, :text, null: false)
     end
   end
 end
