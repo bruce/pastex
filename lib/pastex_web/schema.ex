@@ -21,13 +21,30 @@ defmodule PastexWeb.Schema do
 
   subscription do
     field :paste_created, :paste do
-      config fn _, _ ->
-        {:ok, topic: "*"}
+      arg :visibility, :string, default_value: "public"
+
+      config fn %{visibility: visibility}, %{context: context} ->
+        context |> IO.inspect()
+
+        case {visibility, context} do
+          {"public", _} ->
+            {:ok, topic: "public"}
+
+          {"private", %{current_user: %{id: user_id}}} ->
+            {:ok, topic: "private:#{user_id}"}
+
+          _ ->
+            {:error, "unauthorized"}
+        end
       end
 
       trigger :create_paste,
-        topic: fn _paste ->
-          "*"
+        topic: fn paste ->
+          if paste.visibility == "public" do
+            ["public"]
+          else
+            ["private:#{paste.author_id}"]
+          end
         end
     end
   end

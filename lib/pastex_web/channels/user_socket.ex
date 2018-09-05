@@ -22,8 +22,17 @@ defmodule PastexWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket) do
-    {:ok, socket}
+  def connect(params, socket) do
+    with %{"token" => token} <- params,
+         {:ok, user_id} <- PastexWeb.Auth.verify(token),
+         %Pastex.Identity.User{} = user <- Pastex.Identity.get_user(user_id) do
+      context = %{current_user: user}
+
+      {:ok, Absinthe.Phoenix.Socket.put_options(socket, context: context)}
+    else
+      _ ->
+        {:ok, socket}
+    end
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:

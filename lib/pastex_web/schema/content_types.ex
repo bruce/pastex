@@ -55,6 +55,7 @@ defmodule PastexWeb.Schema.ContentTypes do
   input_object :create_paste_input do
     field :name, non_null(:string)
     field :description, :string
+    field :visibility, :string
     field :files, non_null(list_of(non_null(:file_input)))
   end
 

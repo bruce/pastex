@@ -17,7 +17,7 @@ defmodule Pastex.Identity do
     false
   end
 
-  def authorized?(map, key, _) do
+  def authorized?(_, key, _) do
     true
   end
 
