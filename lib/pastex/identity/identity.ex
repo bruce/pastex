@@ -58,7 +58,10 @@ defmodule Pastex.Identity do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user(id), do: Repo.get(User, id)
+  def get_user(id) do
+    Process.sleep(20)
+    Repo.get(User, id)
+  end
 
   @doc """
   Creates a user.

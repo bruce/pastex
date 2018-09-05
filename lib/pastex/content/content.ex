@@ -18,10 +18,15 @@ defmodule Pastex.Content do
 
   """
   def list_pastes(current_user) do
+    current_user
+    |> query_pastes
+    |> Repo.all()
+  end
+
+  def query_pastes(current_user) do
     Paste
     |> order_by(desc: :inserted_at)
     |> scope_to_user(current_user)
-    |> Repo.all()
   end
 
   defp scope_to_user(query, %{id: user_id}) do

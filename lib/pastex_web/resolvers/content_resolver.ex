@@ -3,8 +3,14 @@ defmodule PastexWeb.ContentResolver do
 
   ## Queries
 
-  def list_pastes(_, _, %{context: context}) do
-    {:ok, Content.list_pastes(context[:current_user])}
+  def list_pastes(_, args, %{context: context}) do
+    query = Content.query_pastes(context[:current_user])
+
+    paste_connection =
+      Absinthe.Relay.Connection.from_query(query, &Pastex.Repo.all/1, args)
+      |> IO.inspect()
+
+    paste_connection
   end
 
   def get_files(paste, _, _) do
