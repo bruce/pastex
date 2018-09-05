@@ -1,19 +1,23 @@
 alias Pastex.{Repo, Content, Identity}
 
 users = [
-  %Identity.User{
+  %{
     name: "Ben Wilson",
     email: "ben@localhost.com",
     password: "abc123"
   },
-  %Identity.User{
+  %{
     name: "Rich Kilmer",
     email: "rich@localhost.com",
     password: "abc123"
   }
 ]
 
-[user1, user2] = Enum.map(users, &Repo.insert!/1)
+[user1, user2] =
+  Enum.map(users, fn params ->
+    {:ok, user} = params |> Identity.create_user()
+    user
+  end)
 
 pastes = [
   %Content.Paste{
