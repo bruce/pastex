@@ -1,6 +1,10 @@
 defmodule PastexWeb.Schema do
   use Absinthe.Schema
 
+  alias PastexWeb.ContentResolver
+
+  import_types PastexWeb.Schema.ContentTypes
+
   query do
     field :health, :string do
       resolve(fn _, _, _ ->
@@ -8,79 +12,23 @@ defmodule PastexWeb.Schema do
       end)
     end
 
-    field :pastes, list_of(:paste) do
-      resolve &list_pastes/3
-    end
+    import_fields :content_queries
   end
 
-  object :paste do
-    field :name, non_null(:string)
-    field :description, :string
-
-    field :files, non_null(list_of(:file)) do
-      resolve &get_files/3
-    end
+  mutation do
+    import_fields :content_mutations
   end
 
-  object :file do
-    field :paste, non_null(:paste)
-
-    field :name, :string do
-      resolve fn file, _, _ ->
-        {:ok, Map.get(file, :name) || "Untitled"}
+  subscription do
+    field :paste_change, :paste do
+      config fn _, _ ->
+        {:ok, topic: "all"}
       end
+
+      # trigger [:create_paste],
+      #   topic: fn paste ->
+      #     [paste.id, "all"]
+      #   end
     end
-
-    field :body, :string
-  end
-
-  @pastes [
-    %{
-      id: 1,
-      name: "Hello World"
-    },
-    %{
-      id: 2,
-      name: "Help!",
-      description: "I don't know what I'm doing!"
-    }
-  ]
-
-  def list_pastes(_, _, _) do
-    {:ok, @pastes}
-  end
-
-  @files [
-    %{
-      paste_id: 1,
-      body: ~s[IO.puts("Hello World")]
-    },
-    %{
-      paste_id: 2,
-      name: "foo.ex",
-      body: """
-      defmodule Foo do
-        def foo, do: Bar.bar()
-      end
-      """
-    },
-    %{
-      paste_id: 2,
-      name: "bar.ex",
-      body: """
-      defmodule Bar do
-        def bar, do: Foo.foo()
-      end
-      """
-    }
-  ]
-
-  def get_files(paste, _, _) do
-    files =
-      Enum.filter(@files, fn file ->
-        file.paste_id == paste.id
-      end)
-
-    {:ok, files}
   end
 end

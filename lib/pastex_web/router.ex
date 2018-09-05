@@ -10,7 +10,8 @@ defmodule PastexWeb.Router do
 
     forward("/graphiql", Absinthe.Plug.GraphiQL,
       schema: PastexWeb.Schema,
-      interface: :playground
+      interface: :playground,
+      socket: PastexWeb.UserSocket
     )
   end
 end
