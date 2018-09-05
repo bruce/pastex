@@ -1,6 +1,7 @@
 defmodule PastexWeb.Schema.ContentTypes do
   use Absinthe.Schema.Notation
   use Absinthe.Relay.Schema.Notation, :modern
+  import Absinthe.Resolution.Helpers
 
   alias PastexWeb.ContentResolver
 
@@ -12,18 +13,20 @@ defmodule PastexWeb.Schema.ContentTypes do
     field :author, :user do
       complexity 100
 
-      resolve fn
-        %{author_id: nil}, _, _ ->
-          {:ok, nil}
-
-        %{author_id: id}, _, _ ->
-          {:ok, Pastex.Identity.get_user(id)}
-      end
+      resolve &get_author/3
     end
 
     field :files, non_null(list_of(:file)) do
       resolve &ContentResolver.get_files/3
     end
+  end
+
+  def get_author(%{author_id: nil}, _, _), do: {:ok, nil}
+
+  def get_author(paste, _, _) do
+    async(fn ->
+      {:ok, Pastex.Identity.get_user(paste.author_id)}
+    end)
   end
 
   object :file do
