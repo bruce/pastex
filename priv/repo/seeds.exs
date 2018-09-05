@@ -24,12 +24,18 @@ pastes = [
     name: "Hello World"
   },
   %Content.Paste{
+    author_id: user1.id,
     name: "Help!",
     description: "I don't know what I'm doing!"
+  },
+  %Content.Paste{
+    author_id: user1.id,
+    name: "Just for me",
+    visibility: "private"
   }
 ]
 
-[past1, past2] =
+[past1, past2, past3] =
   for paste <- pastes do
     Repo.insert!(paste)
   end
@@ -55,6 +61,13 @@ files = [
     defmodule Bar do
       def bar, do: Foo.foo
     end
+    """
+  },
+  %Content.File{
+    paste_id: past2.id,
+    name: "foo.ex",
+    body: """
+    IO.puts("this is secret")
     """
   }
 ]
